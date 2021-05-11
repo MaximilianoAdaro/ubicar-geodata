@@ -4,71 +4,64 @@ from datetime import datetime
 
 from owslib.wfs import WebFeatureService
 
-### Datos a obtener:
-# - hospitales y centros de salud, policía y bomberos
-# - Transporte público, puertos y aeropuertos
 
-# Ministerio de Defensa
-wfs_url = 'http://wms.ign.gob.ar/geoserver/wfs'
+# Create directory and save files on it
+def createDir(dirName):
+    if os.path.exists(dirName):
+        shutil.rmtree(dirName)
+    os.makedirs(dirName)
+    os.chdir(dirName)
+
+
+# Download the available layers from wfs url
+def downloadData(wfsUrl, availableLayers):
+    print(f'From {wfsUrl} downloading...')
+
+    # Connect to GeoServer WFS service.
+    wfs = WebFeatureService(wfsUrl, version='2.0.0')
+    items = wfs.contents.items()
+
+    for key, value in sorted(items):
+        title = value.title
+        if title in availableLayers:
+            try:
+                data = wfs.getfeature(typename=key, outputFormat='json')
+                # Write to file
+                fn = f'{title}.geojson'
+                with open(fn, 'wb') as fh:
+                    fh.write(data.read().encode())
+                print(f'Downloading: {title}')
+            except Exception as error:
+                print(f'Exception in {title}: {error}')
+
+
+###---------------------------------------------------------------------------------------------------------------------
+
+### Ministerio de Defensa
 # Aeropuerto / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
 # Edificio de salud / Estacion de ferrocarril / Ferrocarril / Puerto / Universidad
+wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
+availableIgnLayers = ['Aeropuerto', 'Área de fabricación y procesamiento', 'Cuartel de bomberos',
+                      'Institución penitenciaria', 'Edificio de seguridad', 'Establecimiento educativo',
+                      'Edificio de salud', 'Estación de ferrocarril', 'Ferrocarril', 'Puerto', 'Universidad']
 
-# Ministerio de Transporte
-# wfs_url = 'http://ide.transporte.gob.ar/geoserver/ows?service=wfs&version=1.3.0&request=GetCapabilities'
+### Ministerio de Transporte
 # Rutas Nacionales / Rutas Provinciales
+wfsRouteUrl = 'http://ide.transporte.gob.ar/geoserver/ows?service=wfs&version=1.3.0&request=GetCapabilities'
+availableRouteLayers = ['Rutas Nacionales', 'Rutas Provinciales']
 
-# Ministerio de Educación
-# wfs_url = 'http://mapa.educacion.gob.ar/geoserver/ows?service=wfs&version=1.1.0&request=GetCapabilities'
+###---------------------------------------------------------------------------------------------------------------------
 
-### Transport data
-# wfs_url = 'https://ide.transporte.gob.ar/geoserver/ows?service=wfs&version=1.3.0&request=GetCapabilities'
-# Colectivos - Estaciones - Puertos - Ferrocarril - Subtes - Ruta Nacional / Provincial
-
-
-### Hospitales privados / publios
-
-
-# Connect to GeoServer WFS service.
-wfs = WebFeatureService(wfs_url, version='2.0.0')
-print(wfs_url)
-
-keys = wfs.contents.keys()
-total_files = len(keys)
-
-print("KEYS")
-for key, value in wfs.contents.items():
-    print(f'{value.title}')
-
-dir = './output5'
-if os.path.exists(dir):
-    shutil.rmtree(dir)
-os.makedirs(dir)
-os.chdir(dir)
-
-print(f'files to create: {total_files}')
-created_num = 0
-
+### TIME BEFORE
 timeBefore = datetime.now()
-print("Time before: ", timeBefore)
 
-for key, value in sorted(wfs.contents.items()):
-    print(f'{total_files - created_num} files remaining')
+createDir('./output')
+downloadData(wfsIgnUrl, availableIgnLayers)
+downloadData(wfsRouteUrl, availableRouteLayers)
 
-    try:
-        data = wfs.getfeature(typename=key, outputFormat='JSON')
-        # Write to file
-        fn = f'{value.title}.json'
-        with open(fn, 'wb') as fh:
-            fh.write(data.read().encode())
-    except Exception as error:
-        print(f'Exception in {value.title}: {error}')
-
-    created_num += 1
-
+### TIME AFTER
 timeAfter = datetime.now()
-print("Time after: ", timeAfter)
-
 timeDiff = timeAfter - timeBefore
 
-value = divmod(timeDiff.total_seconds(), 60)
-print(f"Minutes: {value[0]}, Seconds: {value[1]}")
+timeParsed = divmod(timeDiff.total_seconds(), 60)
+print(f"Minutes: {timeParsed[0]}, Seconds: {timeParsed[1]}")

@@ -8,7 +8,7 @@ def connectAndExcecute(excecuteFunction):
     connection = None
     try:
         # read connection parameters
-        params = config(filename="../../database.ini")
+        params = config()
 
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')

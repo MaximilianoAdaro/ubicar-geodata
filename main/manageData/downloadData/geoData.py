@@ -50,12 +50,12 @@ def runDownloads():
 ###---------------------------------------------------------------------------------------------------------------------
 
 """"Ministerio de Defensa"""
-# PointGeomData / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
-# Edificio de salud / Estacion de ferrocarril / MultiLineStringGeomData / Puerto / Universidad
+# Aeropuerto / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
+# Edificio de salud / Estacion de ferrocarril / Ferrocarril / Puerto / Universidad
 wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
-availableIgnLayers = ['PointGeomData', 'Área de fabricación y procesamiento', 'Cuartel de bomberos',
+availableIgnLayers = ['Aeropuerto', 'Área de fabricación y procesamiento', 'Cuartel de bomberos',
                       'Institución penitenciaria', 'Edificio de seguridad', 'Establecimiento educativo',
-                      'Edificio de salud', 'Estación de ferrocarril', 'MultiLineStringGeomData', 'Puerto', 'Universidad']
+                      'Edificio de salud', 'Estación de ferrocarril', 'Ferrocarril', 'Puerto', 'Universidad']
 
 """Ministerio de Transporte"""
 # Rutas Nacionales / Rutas Provinciales

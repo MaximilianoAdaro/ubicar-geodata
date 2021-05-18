@@ -1,9 +1,7 @@
 from configparser import ConfigParser
 
-defDatabasePath = "/home/maxi/projects/ubicar/ubicar-geodata/database.ini"
 
-
-def config(filename=defDatabasePath, section='postgresql'):
+def config(filename="/home/maxi/projects/ubicar/ubicar-geodata/database.ini", section='postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file

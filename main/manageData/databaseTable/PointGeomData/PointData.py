@@ -1,19 +1,9 @@
 from main.config.postgresConnection import connectAndExcecute
 
 
-def getSomeAirportData(cursor):
-    columns = "id, geom, gid, fna"
-    tableName = "Aeropuerto"
-    cursor.execute(f"SELECT {columns} FROM \"{tableName}\"")
-
-    # Recorremos los resultados y los mostramos
-    for nombre in cursor.fetchall():
-        print(nombre)
-
-
-def createAirportTable(cursor):
+def createPointGeomDataTable(cursor, tableName):
     createTableQuery = """
-        create table "Airport" (
+        create table if not exists {} (
             id      serial not null primary key,
             geom    geometry(Point, 4326),
             gid     integer,
@@ -22,13 +12,16 @@ def createAirportTable(cursor):
             fna     varchar,
             gna     varchar,
             nam     varchar,
-            fun     double precision,
             fdc     varchar,
             sag     varchar
         );
-        """
+        """.format(f"\"{tableName}\"")
     cursor.execute(createTableQuery)
 
 
 if __name__ == "__main__":
-    connectAndExcecute(createAirportTable)
+    availableIgnLayers = ['Cuartel de bomberos', 'Institución penitenciaria', 'Edificio de seguridad',
+                          'Establecimiento educativo', 'Edificio de salud', 'Estación de ferrocarril', 'Puerto',
+                          'Universidad']
+    for dataName in availableIgnLayers:
+        connectAndExcecute(createPointGeomDataTable, dataName)

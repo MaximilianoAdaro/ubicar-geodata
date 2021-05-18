@@ -31,7 +31,7 @@ def downloadData(wfsUrl, availableLayers):
 
 ### Ministerio de Defensa
 wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
-availableIgnLayers = ['Aeropuerto']
+availableIgnLayers = ['PointGeomData']
 
 ###---------------------------------------------------------------------------------------------------------------------
 

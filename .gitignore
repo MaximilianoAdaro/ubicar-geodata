@@ -1,5 +1,7 @@
 ### Example user template
 
+eachTableSeparately*
+
 # IntelliJ project files
 .idea
 *.iml

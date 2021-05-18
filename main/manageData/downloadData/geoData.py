@@ -32,7 +32,7 @@ def downloadData(wfsUrl, availableLayers):
             try:
                 data = wfs.getfeature(typename=key, outputFormat='json')
                 # Write to file
-                fn = f'{title}.geojson'
+                fn = f'{title}.json'
                 with open(fn, 'wb') as fh:
                     encodedData = data.read().encode()
                     fh.write(encodedData)
@@ -43,7 +43,6 @@ def downloadData(wfsUrl, availableLayers):
 
 # Start downloading
 def runDownloads():
-    createDir('./output/geojsonData2')
     downloadData(wfsIgnUrl, availableIgnLayers)
     downloadData(wfsRouteUrl, availableRouteLayers)
 
@@ -51,12 +50,12 @@ def runDownloads():
 ###---------------------------------------------------------------------------------------------------------------------
 
 """"Ministerio de Defensa"""
-# Aeropuerto / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
-# Edificio de salud / Estacion de ferrocarril / Ferrocarril / Puerto / Universidad
+# PointGeomData / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
+# Edificio de salud / Estacion de ferrocarril / MultiLineStringGeomData / Puerto / Universidad
 wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
-availableIgnLayers = ['Aeropuerto', 'Área de fabricación y procesamiento', 'Cuartel de bomberos',
+availableIgnLayers = ['PointGeomData', 'Área de fabricación y procesamiento', 'Cuartel de bomberos',
                       'Institución penitenciaria', 'Edificio de seguridad', 'Establecimiento educativo',
-                      'Edificio de salud', 'Estación de ferrocarril', 'Ferrocarril', 'Puerto', 'Universidad']
+                      'Edificio de salud', 'Estación de ferrocarril', 'MultiLineStringGeomData', 'Puerto', 'Universidad']
 
 """Ministerio de Transporte"""
 # Rutas Nacionales / Rutas Provinciales
@@ -70,6 +69,7 @@ timeBefore = datetime.now()
 
 ### Download geo data from layers
 if __name__ == "__main__":
+    createDir('./output/geojsonData2')
     runDownloads()
 
 ### TIME AFTER

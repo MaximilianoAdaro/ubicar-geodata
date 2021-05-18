@@ -3,7 +3,7 @@ import psycopg2
 from main.config.config import config
 
 
-def connectAndExcecute(excecuteFunction):
+def connectAndExcecute(excecuteFunction, tableName):
     """Connect to the PostgreSQL database server"""
     connection = None
     try:
@@ -18,7 +18,7 @@ def connectAndExcecute(excecuteFunction):
         cursor = connection.cursor()
 
         # Ejecutamos una consulta
-        excecuteFunction(cursor)
+        excecuteFunction(cursor, tableName)
 
         # close the communication with the PostgreSQL
         cursor.close()

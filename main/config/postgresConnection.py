@@ -1,9 +1,7 @@
-import psycopg2
-
-from main.config.config import config
-
-
 def connectAndExcecute(excecuteFunction, tableName):
+    import psycopg2
+    from main.config.config import config
+
     """Connect to the PostgreSQL database server"""
     connection = None
     try:
@@ -11,7 +9,7 @@ def connectAndExcecute(excecuteFunction, tableName):
         params = config()
 
         # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
+        print(f'Connecting to database... {tableName}')
         connection = psycopg2.connect(**params)
 
         # create a cursor
@@ -30,4 +28,4 @@ def connectAndExcecute(excecuteFunction, tableName):
     finally:
         if connection is not None:
             connection.close()
-            print('Database connection closed.')
+            print(f'Database connection closed... {tableName}')

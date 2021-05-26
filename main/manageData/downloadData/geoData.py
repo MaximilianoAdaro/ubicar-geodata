@@ -7,6 +7,7 @@ from owslib.wfs import WebFeatureService
 
 # Create directory and save files on it
 def createDir(dirName):
+    print("dirName", dirName)
     if os.path.exists(dirName):
         shutil.rmtree(dirName)
     os.makedirs(dirName)
@@ -49,7 +50,7 @@ def runDownloads():
 
 ###---------------------------------------------------------------------------------------------------------------------
 
-""""Ministerio de Defensa"""
+"""Ministerio de Defensa"""
 # Aeropuerto / Cuartel de bomberos / Institucion penitenciaria / Edificio de seguridad / Establecimiento Educativos
 # Edificio de salud / Estacion de ferrocarril / Ferrocarril / Puerto / Universidad
 wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
@@ -64,17 +65,17 @@ availableRouteLayers = ['Rutas Nacionales', 'Rutas Provinciales']
 
 ###---------------------------------------------------------------------------------------------------------------------
 
-### TIME BEFORE
-timeBefore = datetime.now()
-
 ### Download geo data from layers
 if __name__ == "__main__":
+    ### TIME BEFORE
+    timeBefore = datetime.now()
+
     createDir('./output/geojsonData2')
     runDownloads()
 
-### TIME AFTER
-timeAfter = datetime.now()
-timeDiff = timeAfter - timeBefore
+    ### TIME AFTER
+    timeAfter = datetime.now()
+    timeDiff = timeAfter - timeBefore
 
-timeParsed = divmod(timeDiff.total_seconds(), 60)
-print(f"Minutes: {timeParsed[0]}, Seconds: {timeParsed[1]}")
+    timeParsed = divmod(timeDiff.total_seconds(), 60)
+    print(f"Minutes: {timeParsed[0]}, Seconds: {timeParsed[1]}")

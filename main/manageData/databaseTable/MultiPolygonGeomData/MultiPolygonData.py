@@ -1,12 +1,9 @@
-from main.config.postgresConnection import connectAndExcecute
-
-
 def createMultiPolygonGeomDataTable(cursor, tableName):
     createTableQuery = """
         create table if not exists {} (
             id      serial not null primary key,
             geom    geometry(MultiPolygon, 4326),
-            gid     integer,
+            gid     integer unique,
             entidad bigint,
             objeto  varchar,
             fna     varchar,
@@ -20,6 +17,8 @@ def createMultiPolygonGeomDataTable(cursor, tableName):
 
 
 if __name__ == "__main__":
+    from main.config.postgresConnection import connectAndExcecute
+
     availableIgnLayers = ['Área de fabricación y procesamiento']
     for dataName in availableIgnLayers:
         connectAndExcecute(createMultiPolygonGeomDataTable, dataName)

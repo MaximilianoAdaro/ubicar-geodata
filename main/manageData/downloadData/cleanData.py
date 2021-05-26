@@ -19,7 +19,6 @@ def downloadData(wfsUrl, availableLayers):
                 fn = f'{title}.geojson'
                 with open(fn, 'wb') as fh:
                     data_read = data.read()
-
                     encodedData = data_read.encode()
                     fh.write(encodedData)
                 print(f'Downloading: {title}')
@@ -31,14 +30,14 @@ def downloadData(wfsUrl, availableLayers):
 
 ### Ministerio de Defensa
 wfsIgnUrl = 'http://wms.ign.gob.ar/geoserver/wfs'
-availableIgnLayers = ['PointGeomData']
+availableIgnLayers = ['Aeropuerto']
 
 ###---------------------------------------------------------------------------------------------------------------------
 
 ### TIME BEFORE
 timeBefore = datetime.now()
 
-createDir('./output3')
+createDir('./output/geojsonData3')
 downloadData(wfsIgnUrl, availableIgnLayers)
 
 ### TIME AFTER

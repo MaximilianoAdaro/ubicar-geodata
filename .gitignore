@@ -8,7 +8,7 @@ eachTableSeparately*
 out
 gen
 
-/output*
+output/geojson/
 
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -211,4 +211,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Ini files for sensitive data
-*.ini
+databaseCopy.ini

@@ -41,6 +41,18 @@ def runAllCreateTables():
         connectAndExcecute(MultiPolygonCleanJson.importMultiPolygonGeomData, dataName)
         print("-------------------------------------------------------------------------------------------------------")
 
+    """MultiLineStringData"""
+    for dataName in availableIgnLayersMultiLine:
+        connectAndExcecute(MultiLineStringData.createMultiPointGeomDataTable, dataName)
+        connectAndExcecute(MultiLineStringCleanJson.importMultiPointGeomData, dataName)
+        print("-------------------------------------------------------------------------------------------------------")
+
+    """PointData"""
+    for dataName in availableIgnLayersPoint:
+        connectAndExcecute(PointData.createPointGeomDataTable, dataName)
+        connectAndExcecute(PointCleanJson.importPointGeomData, dataName)
+        print("-------------------------------------------------------------------------------------------------------")
+
     """PointData SubwayCiudad"""
     for dataName in availableIgnLayersPointCiudad:
         connectAndExcecute(PointCiudadData.createPointGeomDataTable, dataName)

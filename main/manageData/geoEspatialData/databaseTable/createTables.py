@@ -11,6 +11,9 @@ availableIgnLayersPoint = \
      "point_educational_establishment", "point_health_building", "point_train_station",
      "point_port", "point_university"]
 
+"""PointDataCiudad"""
+availableIgnLayersPointCiudad = ["point_subway_station"]
+
 
 def runAllCreateTables():
     import main.manageData.geoEspatialData.databaseTable.MultiPolygonGeomData.MultiPolygonData as MultiPolygonData
@@ -24,6 +27,9 @@ def runAllCreateTables():
 
     import main.manageData.geoEspatialData.databaseTable.PointGeomData.PointData as PointData
     import main.manageData.geoEspatialData.databaseTable.PointGeomData.PointCleanJson as PointCleanJson
+
+    import main.manageData.geoEspatialData.databaseTable.PointSubwayCiudadGeomData.PointSubwayCiudadData as PointCiudadData
+    import main.manageData.geoEspatialData.databaseTable.PointSubwayCiudadGeomData.PointSubwayCiudadCleanJson as PointCiudadCleanJson
 
     from main.config.postgresConnection import connectAndExcecute
 
@@ -45,6 +51,12 @@ def runAllCreateTables():
     for dataName in availableIgnLayersPoint:
         connectAndExcecute(PointData.createPointGeomDataTable, dataName)
         connectAndExcecute(PointCleanJson.importPointGeomData, dataName)
+        print("-------------------------------------------------------------------------------------------------------")
+
+    """PointData SubwayCiudad"""
+    for dataName in availableIgnLayersPointCiudad:
+        connectAndExcecute(PointCiudadData.createPointGeomDataTable, dataName)
+        connectAndExcecute(PointCiudadCleanJson.importPointGeomData, dataName)
         print("-------------------------------------------------------------------------------------------------------")
 
 
